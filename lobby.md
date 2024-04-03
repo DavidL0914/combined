@@ -1,6 +1,5 @@
 ---
 layout: wow
-permalink: /lobby
 ---
 
 <html lang="en">
@@ -39,25 +38,31 @@ permalink: /lobby
             width: 300px;
             height: auto;
             top: 55%;
-            left: 30%;
+            left: 40%;
         }
         .racing-game {
             width: 140px;
             height: auto;
             top: 61%;
-            left: 20%;
+            left: 30%;
         }
         .blackjack {
             width: 300px;
             height: auto;
             top: 68%;
-            left: 48%;
+            left: 55%;
         }
         .kitchen {
             width: 500px;
             height: auto;
             top: 55%;
             left: 73%;
+        }
+        .basketball-game {
+            width: 150px;
+            height: auto;
+            top: 52%;
+            left: 15%;
         }
         #player {
             position: absolute;
@@ -76,6 +81,7 @@ permalink: /lobby
         <img class="game-machine racing-game" src="https://files.catbox.moe/dxq8fv.png" alt="Racing Game Machine" data-machine="racing" onclick="playRacingGame()"/>
         <img class="game-machine blackjack" src="https://files.catbox.moe/89arwk.png" alt="Blackjack Machine" data-machine="blackjack" onclick="playBlackjack()"/>
         <img class="game-machine kitchen" src="https://files.catbox.moe/93wg09.png" alt="Kitchen Area" data-machine="kitchen" onclick="goToKitchen()"/>
+        <img class="game-machine basketball-game" src="https://files.catbox.moe/cug5o8.png" alt="Basketball Game Machine" data-machine="basketball" onclick="playBasketball()"/>
         <img id="player" src="https://files.catbox.moe/awdtts.png" alt="Player Character">
     </div>
 
@@ -122,26 +128,39 @@ permalink: /lobby
                 if (key === 'a' || key === 'd') {
                     movePlayer(key === 'a' ? 'left' : 'right');
                 } else if (key === 'w') {
-                    machines.forEach(machine => {
-                        if (machine.classList.contains('active')) {
-                            switch (machine.getAttribute('data-machine')) {
-                                case 'slot':
-                                    playSlotMachine();
-                                    break;
-                                case 'racing':
-                                    playRacingGame();
-                                    break;
-                                case 'blackjack':
-                                    playBlackjack();
-                                    break;
-                                case 'kitchen':
-                                    goToKitchen();
-                                    break;
-                                default:
-                                    break;
+                    if (playerX > lobby.offsetWidth - playerWidth - 100) {
+                        // Go to different link when player is on the very right side
+                        window.location.href = "http://127.0.0.1:4100/frontcasts/ML.html";
+                    } else {
+                        machines.forEach(machine => {
+                            if (machine.classList.contains('active')) {
+                                switch (machine.getAttribute('data-machine')) {
+                                    case 'slot':
+                                        playSlotMachine();
+                                        break;
+                                    case 'racing':
+                                        playRacingGame();
+                                        break;
+                                    case 'blackjack':
+                                        playBlackjack();
+                                        break;
+                                    case 'kitchen':
+                                        if (playerX > 600) {
+                                            goToKitchen();
+                                        } else {
+                                            // Go to different link when player is on the right side of the kitchen
+                                            window.location.href = "http://127.0.0.1:4100/frontcasts/recipe.html";
+                                        }
+                                        break;
+                                    case 'basketball':
+                                        playBasketball();
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             });
         });
@@ -162,6 +181,9 @@ permalink: /lobby
             window.location.href = "http://127.0.0.1:4100/frontcasts/search.html"; // Link to the kitchen webpage
         }
 
+        function playBasketball() {
+            window.location.href = "http://127.0.0.1:4100/frontcasts/basketball"; // Link to the basketball game
+        }
     </script>
 </body>
 </html>

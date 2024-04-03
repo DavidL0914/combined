@@ -193,6 +193,15 @@
             });
         });
     });
+
+    document.addEventListener('keydown', function(event) {
+        const key = event.key.toLowerCase();
+        if (key === 's') {
+            window.location.href = "http://127.0.0.1:4100/frontcasts/lobby"; // Redirect to the lobby page
+        }
+    });
+
 </script>
 </body>
 </html>
+
